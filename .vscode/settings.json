@@ -1,0 +1,11 @@
+{
+  "files.exclude": {
+    ".dart_tool": true,
+    ".idea": true,
+    ".metadata": true,
+    ".packages": true,
+    "brainbug.iml": true,
+    "LICENSE": true,
+    "pubspec.locl": true,
+  }
+}
