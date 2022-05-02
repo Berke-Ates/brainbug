@@ -15,3 +15,5 @@ Online Brainfuck Debugger
 - Cellsize
 - Cell wrapping
 - ASCII Table
+- Runtime edit 
+- Memory edit

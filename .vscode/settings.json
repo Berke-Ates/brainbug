@@ -6,6 +6,6 @@
     ".packages": true,
     "brainbug.iml": true,
     "LICENSE": true,
-    "pubspec.locl": true,
+    "pubspec.lock": true,
   }
 }
