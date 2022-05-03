@@ -30,7 +30,7 @@ class ControlButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: Theme.of(context).dividerColor,
-          width: 6,
+          width: 3,
         ),
       ),
       child: const AspectRatio(
