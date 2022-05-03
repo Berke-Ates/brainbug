@@ -119,7 +119,7 @@ class Interpreter {
 
   // TODO: Implement Runtime bracket matcher
   int _findBracketMatch(int pos) {
-    int res = bracketLUT[pos] ?? 0;
+    final int res = bracketLUT[pos] ?? 0;
     return res;
   }
 }

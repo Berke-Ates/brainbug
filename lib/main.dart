@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:brainbug/controls.dart';
 import 'package:brainbug/editor.dart';
 import 'package:brainbug/interpreter.dart';
 import 'package:brainbug/io.dart';
@@ -25,7 +26,7 @@ class _BrainBugState extends State<BrainBug> {
   void initState() {
     super.initState();
 
-    Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
+    Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
       if (interpreter.isValid && !interpreter.isDone()) {
         interpreter.step();
         ec.mark = interpreter.cPtr;
@@ -62,7 +63,17 @@ class _BrainBugState extends State<BrainBug> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Editor(interpreter, controller: ec),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Editor(interpreter, controller: ec),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(child: Controls(interpreter)),
+                  ],
+                ),
                 const SizedBox(height: 50),
                 IO(interpreter),
                 const SizedBox(height: 50),
