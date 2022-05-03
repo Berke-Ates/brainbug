@@ -1,6 +1,6 @@
 class Interpreter {
-  final String code;
-  final String input;
+  String code = '';
+  String input = '';
   String output = '';
 
   final Map<int, int> tape = <int, int>{0: 0};
@@ -11,7 +11,17 @@ class Interpreter {
 
   final Map<int, int> bracketLUT = <int, int>{};
 
-  Interpreter(this.code, this.input) {
+  /// Resets all pointers, the tape and LUT
+  void reset() {
+    cPtr = 0;
+    tPtr = 0;
+    iPtr = 0;
+    bracketLUT.clear();
+  }
+
+  /// Analyzes code for matching brackets and creates LUT
+  void analyze() {
+    bracketLUT.clear();
     final List<int> stack = <int>[];
 
     for (int i = 0; i < code.length; i++) {
@@ -30,6 +40,7 @@ class Interpreter {
     // TODO: Check if stack is empty
   }
 
+  /// Executes [size] steps of the code at current [cPtr]
   void step([int size = 1]) {
     if (isDone()) return;
 
@@ -58,10 +69,10 @@ class Interpreter {
           output += byte2Ascii(tape[tPtr]!);
           break;
         case '[':
-          if (tape[tPtr] == 0) cPtr = bracketLUT[cPtr]!;
+          if (tape[tPtr] == 0) cPtr = _findBracketMatch(cPtr);
           break;
         case ']':
-          if (tape[tPtr] != 0) cPtr = bracketLUT[cPtr]!;
+          if (tape[tPtr] != 0) cPtr = _findBracketMatch(cPtr);
           break;
         // Otherwise not instr
       }
@@ -72,6 +83,7 @@ class Interpreter {
 
   bool isDone() => cPtr >= code.length;
 
+  /// Expands the [tape] if [tPtr] is pointing to a larger memory location
   void _alloc() {
     for (int i = tape.length; i <= tPtr; i++) {
       tape[i] = 0;
@@ -87,11 +99,12 @@ class Interpreter {
   }
 
   // TODO: Implement tape wrapping
+  /// Checks [tape] for valid values and wraps if necessary
   void validateTape() {}
 
   // TODO: Implement Runtime bracket matcher
   int _findBracketMatch(int pos) {
-    int res = -1;
+    int res = bracketLUT[pos]!;
     return res;
   }
 }

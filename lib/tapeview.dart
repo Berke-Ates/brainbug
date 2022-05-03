@@ -42,11 +42,12 @@ class MemoryCell extends StatelessWidget {
       margin: const EdgeInsets.all(4),
       height: 150,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: selected
               ? Theme.of(context).primaryColor
               : Theme.of(context).dividerColor,
-          width: 8,
+          width: 6,
         ),
       ),
       duration: const Duration(milliseconds: 50),

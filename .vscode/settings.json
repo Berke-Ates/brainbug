@@ -7,5 +7,6 @@
     "brainbug.iml": true,
     "LICENSE": true,
     "pubspec.lock": true,
+    "build": true,
   }
 }
