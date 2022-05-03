@@ -7,7 +7,7 @@ Online Brainfuck Debugger
 - Runner with different speeds
 - Run, Pause, Reset
 - \# breakpoints
-- // Code comments
+- /* Code comments */
 - Memory view in ASCII + RAW
 - Dark theme
 - Input / Output
@@ -17,3 +17,4 @@ Online Brainfuck Debugger
 - ASCII Table
 - Runtime edit 
 - Memory edit
+- Key binding
