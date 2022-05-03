@@ -38,7 +38,7 @@ class MemoryCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
       margin: const EdgeInsets.all(4),
       height: 150,
       decoration: BoxDecoration(
@@ -49,6 +49,7 @@ class MemoryCell extends StatelessWidget {
           width: 8,
         ),
       ),
+      duration: const Duration(milliseconds: 50),
       child: AspectRatio(
         aspectRatio: 1,
         child: Column(
