@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:brainbug/editor.dart';
 import 'package:brainbug/interpreter.dart';
+import 'package:brainbug/io.dart';
 import 'package:brainbug/tapeview.dart';
 import 'package:flutter/material.dart';
 
@@ -62,6 +63,8 @@ class _BrainBugState extends State<BrainBug> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Editor(interpreter, controller: ec),
+                const SizedBox(height: 50),
+                IO(interpreter),
                 const SizedBox(height: 50),
                 TapeView(interpreter),
               ],

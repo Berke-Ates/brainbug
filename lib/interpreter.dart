@@ -12,7 +12,7 @@ class Interpreter {
   final Map<int, int> bracketLUT = <int, int>{};
   bool isValid = true;
 
-  /// Resets all pointers, the tape and LUT
+  /// Resets all pointers, the tape, LUT and output
   void reset() {
     cPtr = 0;
     tPtr = 0;
@@ -20,6 +20,7 @@ class Interpreter {
     tape.clear();
     tape[0] = 0;
     bracketLUT.clear();
+    output = '';
   }
 
   /// Analyzes code for matching brackets and creates LUT
@@ -74,6 +75,8 @@ class Interpreter {
         case ',':
           if (iPtr < input.length) {
             tape[tPtr] = ascii2Byte(input[iPtr++]);
+          } else {
+            tape[tPtr] = 0;
           }
           break;
         case '.':
