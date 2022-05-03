@@ -9,7 +9,7 @@ class Interpreter {
   int tPtr = 0; // Tape Pointer
   int iPtr = 0; // Input Pointer
 
-  final Map<int, int> _bracketLUT = <int, int>{};
+  final Map<int, int> bracketLUT = <int, int>{};
 
   Interpreter(this.code, this.input) {
     final List<int> stack = <int>[];
@@ -22,8 +22,8 @@ class Interpreter {
         case ']':
           // TODO: Check stacksize
           final int s = stack.removeLast();
-          _bracketLUT[s] = i;
-          _bracketLUT[i] = s;
+          bracketLUT[s] = i;
+          bracketLUT[i] = s;
       }
     }
 
@@ -31,6 +31,8 @@ class Interpreter {
   }
 
   void step([int size = 1]) {
+    if (isDone()) return;
+
     for (int i = 0; i < size; i++) {
       switch (code[cPtr]) {
         case '+':
@@ -48,22 +50,27 @@ class Interpreter {
           _alloc();
           break;
         case ',':
-          // TODO: Check EOF
-          tape[tPtr] = ascii2Byte(input[iPtr++]);
+          if (iPtr < input.length) {
+            tape[tPtr] = ascii2Byte(input[iPtr++]);
+          }
           break;
         case '.':
           output += byte2Ascii(tape[tPtr]!);
           break;
         case '[':
-          if (tape[tPtr] == 0) cPtr = _bracketLUT[tPtr]!;
+          if (tape[tPtr] == 0) cPtr = bracketLUT[cPtr]!;
           break;
         case ']':
-          if (tape[tPtr] != 0) cPtr = _bracketLUT[tPtr]!;
+          if (tape[tPtr] != 0) cPtr = bracketLUT[cPtr]!;
           break;
         // Otherwise not instr
       }
+
+      cPtr++;
     }
   }
+
+  bool isDone() => cPtr >= code.length;
 
   void _alloc() {
     for (int i = tape.length; i <= tPtr; i++) {
@@ -71,14 +78,12 @@ class Interpreter {
     }
   }
 
-// TODO: ascii2Byte
   int ascii2Byte(String ascii) {
-    return 2;
+    return ascii.codeUnitAt(0);
   }
 
-// TODO: byte2Ascii
   String byte2Ascii(int byte) {
-    return 'hhh';
+    return String.fromCharCode(byte);
   }
 
   // TODO: Implement tape wrapping
