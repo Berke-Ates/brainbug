@@ -42,6 +42,8 @@ class _BrainBugState extends State<BrainBug> {
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.deepPurple,
         primaryColorDark: Colors.deepPurple[800],
+        scaffoldBackgroundColor: const Color(0xFF121212),
+        backgroundColor: const Color(0xFF222222),
         textTheme: Theme.of(context)
             .textTheme
             .copyWith(
@@ -70,7 +72,6 @@ class _BrainBugState extends State<BrainBug> {
                       flex: 2,
                       child: Editor(interpreter, controller: ec),
                     ),
-                    const SizedBox(width: 8),
                     Expanded(child: Controls(interpreter)),
                   ],
                 ),

@@ -41,64 +41,57 @@ class MemoryCell extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(4),
       height: 150,
+      width: 150,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
+        color: selected
+            ? Theme.of(context).primaryColorDark
+            : Theme.of(context).backgroundColor,
         border: Border.all(
-          color: selected
-              ? Theme.of(context).primaryColor
-              : Theme.of(context).dividerColor,
+          color: Theme.of(context).dividerColor,
           width: 6,
         ),
       ),
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Theme.of(context).dividerColor,
-                      width: 4,
-                    ),
-                  ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: Divider.createBorderSide(context, width: 4),
                 ),
-                child: Center(
-                  child: Text(val.toString()),
-                ),
+              ),
+              child: Center(
+                child: Text(val.toString()),
               ),
             ),
-            Expanded(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          right: BorderSide(
-                            color: Theme.of(context).dividerColor,
-                            width: 4,
-                          ),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(pos.toString()),
+          ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: Divider.createBorderSide(context, width: 4),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
                     child: Center(
-                      child: Text(sym),
+                      child: Text(pos.toString()),
                     ),
                   ),
-                ],
-              ),
-            )
-          ],
-        ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Text(sym),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

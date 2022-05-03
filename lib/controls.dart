@@ -26,6 +26,7 @@ class ControlButton extends StatelessWidget {
       margin: const EdgeInsets.all(4),
       height: 150,
       decoration: BoxDecoration(
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
           color: Theme.of(context).dividerColor,
