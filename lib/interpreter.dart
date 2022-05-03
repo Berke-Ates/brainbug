@@ -10,12 +10,15 @@ class Interpreter {
   int iPtr = 0; // Input Pointer
 
   final Map<int, int> bracketLUT = <int, int>{};
+  bool isValid = true;
 
   /// Resets all pointers, the tape and LUT
   void reset() {
     cPtr = 0;
     tPtr = 0;
     iPtr = 0;
+    tape.clear();
+    tape[0] = 0;
     bracketLUT.clear();
   }
 
@@ -30,14 +33,21 @@ class Interpreter {
           stack.add(i);
           break;
         case ']':
-          // TODO: Check stacksize
+          if (stack.isEmpty) {
+            isValid = false;
+            return;
+          }
           final int s = stack.removeLast();
           bracketLUT[s] = i;
           bracketLUT[i] = s;
       }
     }
 
-    // TODO: Check if stack is empty
+    if (stack.isNotEmpty) {
+      isValid = false;
+      return;
+    }
+    isValid = true;
   }
 
   /// Executes [size] steps of the code at current [cPtr]
@@ -57,6 +67,7 @@ class Interpreter {
           _alloc();
           break;
         case '<':
+          // TODO: Check bounds
           tPtr--;
           _alloc();
           break;
@@ -85,16 +96,17 @@ class Interpreter {
 
   /// Expands the [tape] if [tPtr] is pointing to a larger memory location
   void _alloc() {
+    // TODO: Wrap or warning
     for (int i = tape.length; i <= tPtr; i++) {
       tape[i] = 0;
     }
   }
 
-  int ascii2Byte(String ascii) {
+  static int ascii2Byte(String ascii) {
     return ascii.codeUnitAt(0);
   }
 
-  String byte2Ascii(int byte) {
+  static String byte2Ascii(int byte) {
     return String.fromCharCode(byte);
   }
 
@@ -104,7 +116,7 @@ class Interpreter {
 
   // TODO: Implement Runtime bracket matcher
   int _findBracketMatch(int pos) {
-    int res = bracketLUT[pos]!;
+    int res = bracketLUT[pos] ?? 0;
     return res;
   }
 }

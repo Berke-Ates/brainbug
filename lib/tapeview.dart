@@ -14,7 +14,7 @@ class TapeView extends StatelessWidget {
             (MapEntry<int, int> e) => MemoryCell(
               pos: e.key,
               val: e.value,
-              sym: interpreter.byte2Ascii(e.value),
+              sym: Interpreter.byte2Ascii(e.value),
               selected: e.key == interpreter.tPtr,
             ),
           )
@@ -38,7 +38,7 @@ class MemoryCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
+    return Container(
       margin: const EdgeInsets.all(4),
       height: 150,
       decoration: BoxDecoration(
@@ -50,7 +50,6 @@ class MemoryCell extends StatelessWidget {
           width: 6,
         ),
       ),
-      duration: const Duration(milliseconds: 50),
       child: AspectRatio(
         aspectRatio: 1,
         child: Column(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brainbug/editor.dart';
 import 'package:brainbug/interpreter.dart';
 import 'package:brainbug/tapeview.dart';
@@ -14,8 +16,7 @@ class BrainBug extends StatefulWidget {
   State<BrainBug> createState() => _BrainBugState();
 }
 
-class _BrainBugState extends State<BrainBug>
-    with SingleTickerProviderStateMixin {
+class _BrainBugState extends State<BrainBug> {
   final Interpreter interpreter = Interpreter();
   final EditorController ec = EditorController();
 
@@ -23,13 +24,13 @@ class _BrainBugState extends State<BrainBug>
   void initState() {
     super.initState();
 
-    createTicker((Duration elapsed) {
-      if (elapsed.inMilliseconds % 100 == 0 && !interpreter.isDone()) {
+    Timer.periodic(const Duration(milliseconds: 100), (Timer timer) {
+      if (interpreter.isValid && !interpreter.isDone()) {
         interpreter.step();
         ec.mark = interpreter.cPtr;
         setState(() {});
       }
-    }).start();
+    });
   }
 
   @override
