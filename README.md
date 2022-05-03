@@ -4,9 +4,7 @@ Online Brainfuck Debugger
 ## Features
 
 ### Layout
-- Memory view in ASCII + RAW
-- Dark theme
-- Input / Output
+- BF Logo in background
 - Stepper (with variable stepsize)
 - Runner with different speeds
 - Run, Pause, Reset
