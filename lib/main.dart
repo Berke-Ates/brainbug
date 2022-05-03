@@ -16,8 +16,9 @@ class BrainBug extends StatefulWidget {
 class _BrainBugState extends State<BrainBug>
     with SingleTickerProviderStateMixin {
   final Interpreter interpreter = Interpreter(
-      '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
-      '12341234');
+    '++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.',
+    '12341234',
+  );
   int el = 0;
 
   @override
@@ -45,8 +46,11 @@ class _BrainBugState extends State<BrainBug>
             ),
       ),
       home: Scaffold(
-        body: SingleChildScrollView(
-          child: TapeView(interpreter),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: TapeView(interpreter),
+          ),
         ),
       ),
     );
