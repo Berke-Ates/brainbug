@@ -45,6 +45,7 @@ class _BrainBugState extends State<BrainBug> {
   }
 
   void stop() {
+    pause();
     interpreter.reset();
     ec.mark = interpreter.cPtr;
     ic.mark = interpreter.iPtr;
