@@ -5,9 +5,9 @@ Online Brainfuck Debugger
 
 ### Layout
 - BF Logo in background
-- Stepper (with variable stepsize)
-- Runner with different speeds
-- Run, Pause, Reset
+- Variable stepsize
+- Different runner speeds
+- Add hover info
 
 ### Code features
 - \# breakpoints
@@ -19,7 +19,6 @@ Online Brainfuck Debugger
 - Cell wrapping
 
 ### Editor
-- Runtime edit 
 - Memory edit
 
 ### Nice to have

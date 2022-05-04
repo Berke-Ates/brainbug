@@ -1,10 +1,12 @@
+import 'package:brainbug/editor.dart';
 import 'package:brainbug/interpreter.dart';
 import 'package:flutter/material.dart';
 
 class IO extends StatelessWidget {
   final Interpreter interpreter;
+  final EditorController controller;
 
-  const IO(this.interpreter);
+  const IO(this.interpreter, {required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +17,12 @@ class IO extends StatelessWidget {
             margin: const EdgeInsets.all(4),
             color: Theme.of(context).backgroundColor,
             child: TextField(
+              controller: controller,
               cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
               maxLines: null,
               onChanged: (String? s) {
                 if (s != null) {
                   interpreter.input = s;
-                  interpreter.reset();
-                  interpreter.analyze();
                 }
               },
               decoration: InputDecoration(

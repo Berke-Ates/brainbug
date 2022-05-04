@@ -22,8 +22,6 @@ class Editor extends StatelessWidget {
         onChanged: (String? s) {
           if (s != null) {
             interpreter.code = controller.text;
-            interpreter.reset();
-            interpreter.analyze();
           }
         },
         decoration: InputDecoration(
@@ -53,19 +51,21 @@ class EditorController extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
+    final String ps = text.padRight(mark + 1, text.isEmpty ? ' ' : '\$');
+
     return TextSpan(
       style: style,
-      children: mark < 0 || mark >= text.length
+      children: mark < 0
           ? <TextSpan>[TextSpan(text: text)]
           : <TextSpan>[
-              if (mark > 0) TextSpan(text: text.substring(0, mark)),
+              if (mark > 0) TextSpan(text: ps.substring(0, mark)),
               TextSpan(
-                text: text[mark],
+                text: ps[mark],
                 style: style!.copyWith(
                   backgroundColor: Theme.of(context).primaryColorDark,
                 ),
               ),
-              TextSpan(text: text.substring(mark + 1)),
+              TextSpan(text: ps.substring(mark + 1)),
             ],
     );
   }

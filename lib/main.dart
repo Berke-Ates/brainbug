@@ -21,18 +21,37 @@ class BrainBug extends StatefulWidget {
 class _BrainBugState extends State<BrainBug> {
   final Interpreter interpreter = Interpreter();
   final EditorController ec = EditorController();
+  final EditorController ic = EditorController();
+  Duration delay = const Duration(milliseconds: 100);
+  Timer? timer;
 
-  @override
-  void initState() {
-    super.initState();
+  void step() {
+    interpreter.step();
+    ec.mark = interpreter.cPtr;
+    ic.mark = interpreter.iPtr;
+    setState(() {});
+  }
 
-    Timer.periodic(const Duration(milliseconds: 1), (Timer timer) {
+  void play() {
+    timer = Timer.periodic(delay, (Timer timer) {
       if (interpreter.isValid && !interpreter.isDone()) {
-        interpreter.step();
-        ec.mark = interpreter.cPtr;
-        setState(() {});
+        step();
+      } else {
+        pause();
       }
     });
+  }
+
+  void pause() {
+    if (timer != null) timer!.cancel();
+    setState(() {});
+  }
+
+  void stop() {
+    interpreter.reset();
+    ec.mark = interpreter.cPtr;
+    ic.mark = interpreter.iPtr;
+    setState(() {});
   }
 
   @override
@@ -72,11 +91,20 @@ class _BrainBugState extends State<BrainBug> {
                       flex: 2,
                       child: Editor(interpreter, controller: ec),
                     ),
-                    Expanded(child: Controls(interpreter)),
+                    Expanded(
+                      child: Controls(
+                        interpreter,
+                        step: step,
+                        play: play,
+                        pause: pause,
+                        stop: stop,
+                        isRunning: timer != null && timer!.isActive,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 25),
-                IO(interpreter),
+                IO(interpreter, controller: ic),
                 const SizedBox(height: 25),
                 TapeView(interpreter),
               ],
