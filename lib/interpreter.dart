@@ -9,7 +9,7 @@ class Interpreter {
   int tPtr = 0; // Tape Pointer
   int iPtr = 0; // Input Pointer
 
-  final Map<int, int> bracketLUT = <int, int>{};
+  final Map<int, int> _bracketLUT = <int, int>{};
   bool isValid = true;
 
   /// Resets all pointers, the tape, LUT and output
@@ -19,13 +19,13 @@ class Interpreter {
     iPtr = 0;
     tape.clear();
     tape[0] = 0;
-    bracketLUT.clear();
+    _bracketLUT.clear();
     output = '';
   }
 
   /// Analyzes code for matching brackets and creates LUT
-  void analyze() {
-    bracketLUT.clear();
+  void _analyze() {
+    _bracketLUT.clear();
     final List<int> stack = <int>[];
 
     for (int i = 0; i < code.length; i++) {
@@ -39,8 +39,8 @@ class Interpreter {
             return;
           }
           final int s = stack.removeLast();
-          bracketLUT[s] = i;
-          bracketLUT[i] = s;
+          _bracketLUT[s] = i;
+          _bracketLUT[i] = s;
       }
     }
 
@@ -119,7 +119,8 @@ class Interpreter {
 
   // TODO: Implement Runtime bracket matcher
   int _findBracketMatch(int pos) {
-    final int res = bracketLUT[pos] ?? 0;
+    _analyze();
+    final int res = _bracketLUT[pos] ?? 0;
     return res;
   }
 }

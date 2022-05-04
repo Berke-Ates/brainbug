@@ -22,7 +22,7 @@ class _BrainBugState extends State<BrainBug> {
   final Interpreter interpreter = Interpreter();
   final EditorController ec = EditorController();
   final EditorController ic = EditorController();
-  Duration delay = const Duration(milliseconds: 100);
+  Duration delay = const Duration(milliseconds: 10);
   Timer? timer;
 
   void step() {
