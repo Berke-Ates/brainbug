@@ -25,20 +25,17 @@ class _BrainBugState extends State<BrainBug> {
   Duration delay = const Duration(milliseconds: 10);
   Timer? timer;
 
-  void step() {
-    interpreter.step();
+  void step([int stepsize = 1]) {
+    final bool isDone = interpreter.step(stepsize);
     ec.mark = interpreter.cPtr;
     ic.mark = interpreter.iPtr;
+    if (isDone) pause();
     setState(() {});
   }
 
   void play() {
     timer = Timer.periodic(delay, (Timer timer) {
-      if (interpreter.isValid && !interpreter.isDone()) {
-        step();
-      } else {
-        pause();
-      }
+      step();
     });
   }
 

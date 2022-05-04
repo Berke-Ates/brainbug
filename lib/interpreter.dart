@@ -9,53 +9,22 @@ class Interpreter {
   int tPtr = 0; // Tape Pointer
   int iPtr = 0; // Input Pointer
 
-  final Map<int, int> _bracketLUT = <int, int>{};
-  bool isValid = true;
-
-  /// Resets all pointers, the tape, LUT and output
+  /// Resets all pointers, the tape and output
   void reset() {
     cPtr = 0;
     tPtr = 0;
     iPtr = 0;
     tape.clear();
     tape[0] = 0;
-    _bracketLUT.clear();
     output = '';
   }
 
-  /// Analyzes code for matching brackets and creates LUT
-  void _analyze() {
-    _bracketLUT.clear();
-    final List<int> stack = <int>[];
-
-    for (int i = 0; i < code.length; i++) {
-      switch (code[i]) {
-        case '[':
-          stack.add(i);
-          break;
-        case ']':
-          if (stack.isEmpty) {
-            isValid = false;
-            return;
-          }
-          final int s = stack.removeLast();
-          _bracketLUT[s] = i;
-          _bracketLUT[i] = s;
-      }
-    }
-
-    if (stack.isNotEmpty) {
-      isValid = false;
-      return;
-    }
-    isValid = true;
-  }
-
   /// Executes [size] steps of the code at current [cPtr]
-  void step([int size = 1]) {
-    if (isDone()) return;
-
+  /// Return if execution is done
+  bool step([int size = 1]) {
     for (int i = 0; i < size; i++) {
+      if (cPtr >= code.length) return true;
+
       switch (code[cPtr]) {
         case '+':
           tape[tPtr] = (tape[tPtr]! + 1) % 256;
@@ -83,19 +52,33 @@ class Interpreter {
           output += byte2Ascii(tape[tPtr]!);
           break;
         case '[':
-          if (tape[tPtr] == 0) cPtr = _findBracketMatch(cPtr);
+          if (tape[tPtr] == 0) {
+            final int? val = _findBracketMatch(cPtr);
+            if (val != null) {
+              cPtr = val;
+            } else {
+              return true;
+            }
+          }
           break;
         case ']':
-          if (tape[tPtr] != 0) cPtr = _findBracketMatch(cPtr);
+          if (tape[tPtr] != 0) {
+            final int? val = _findBracketMatch(cPtr);
+            if (val != null) {
+              cPtr = val;
+            } else {
+              return true;
+            }
+          }
           break;
         // Otherwise not instr
       }
 
       cPtr++;
     }
-  }
 
-  bool isDone() => cPtr >= code.length;
+    return cPtr >= code.length;
+  }
 
   /// Expands the [tape] if [tPtr] is pointing to a larger memory location
   void _alloc() {
@@ -117,10 +100,48 @@ class Interpreter {
   /// Checks [tape] for valid values and wraps if necessary
   void validateTape() {}
 
-  // TODO: Implement Runtime bracket matcher
-  int _findBracketMatch(int pos) {
-    _analyze();
-    final int res = _bracketLUT[pos] ?? 0;
-    return res;
+  int? _findBracketMatch(int pos) {
+    final List<int> stack = <int>[];
+
+    if (code[pos] == '[') {
+      for (int i = pos; i < code.length; i++) {
+        switch (code[i]) {
+          case '[':
+            stack.add(i);
+            break;
+          case ']':
+            if (stack.isEmpty) {
+              return null;
+            }
+            stack.removeLast();
+            if (stack.isEmpty) {
+              return i;
+            }
+        }
+      }
+      return null;
+    }
+
+    if (code[pos] == ']') {
+      for (int i = pos; i >= 0; i--) {
+        switch (code[i]) {
+          case '[':
+            if (stack.isEmpty) {
+              return null;
+            }
+            stack.removeLast();
+            if (stack.isEmpty) {
+              return i;
+            }
+            break;
+          case ']':
+            stack.add(i);
+            break;
+        }
+      }
+      return null;
+    }
+
+    return null;
   }
 }
