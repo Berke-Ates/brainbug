@@ -10,7 +10,6 @@ Online Brainfuck Debugger
 - Add hover info
 
 ### Code features
-- \# breakpoints
 - /* Code comments */
 
 ### Interpreter settings

@@ -71,6 +71,10 @@ class Interpreter {
             }
           }
           break;
+
+        case '#':
+          cPtr++;
+          return true;
         // Otherwise not instr
       }
 
