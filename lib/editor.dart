@@ -13,7 +13,7 @@ class Editor extends StatelessWidget {
       margin: const EdgeInsets.all(4),
       color: Theme.of(context).backgroundColor,
       child: TextField(
-        cursorColor: Colors.white10,
+        cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
         cursorWidth: 4,
         cursorRadius: const Radius.circular(5),
         maxLines: null,

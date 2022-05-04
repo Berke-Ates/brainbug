@@ -17,6 +17,8 @@ class IO extends StatelessWidget {
             margin: const EdgeInsets.all(4),
             color: Theme.of(context).backgroundColor,
             child: TextField(
+              cursorWidth: 4,
+              cursorRadius: const Radius.circular(5),
               controller: controller,
               cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
               maxLines: null,
@@ -46,6 +48,8 @@ class IO extends StatelessWidget {
             margin: const EdgeInsets.all(4),
             color: Theme.of(context).backgroundColor,
             child: TextField(
+              cursorWidth: 4,
+              cursorRadius: const Radius.circular(5),
               cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
               maxLines: null,
               readOnly: true,

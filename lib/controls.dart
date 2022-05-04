@@ -1,13 +1,16 @@
 import 'package:brainbug/interpreter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Controls extends StatelessWidget {
   final Interpreter interpreter;
-  final VoidCallback step;
+  final Function([int]) step;
   final VoidCallback play;
   final VoidCallback pause;
   final VoidCallback stop;
   final bool isRunning;
+  final TextEditingController stepC;
+  final TextEditingController delayC;
 
   const Controls(
     this.interpreter, {
@@ -16,33 +19,104 @@ class Controls extends StatelessWidget {
     required this.pause,
     required this.stop,
     required this.isRunning,
+    required this.stepC,
+    required this.delayC,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: <Widget>[
-        ControlButton(
-          icon: Icons.arrow_forward_ios_rounded,
-          message: 'Step',
-          onTap: step,
+        Row(
+          children: [
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(4),
+                color: Theme.of(context).backgroundColor,
+                child: TextField(
+                  controller: stepC,
+                  cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
+                  cursorWidth: 4,
+                  cursorRadius: const Radius.circular(5),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: InputDecoration(
+                    isDense: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: Divider.createBorderSide(context, width: 3),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: Divider.createBorderSide(context, width: 3),
+                    ),
+                    floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
+                    labelText: 'Step Size',
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(4),
+                color: Theme.of(context).backgroundColor,
+                child: TextField(
+                  controller: delayC,
+                  cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
+                  cursorWidth: 4,
+                  cursorRadius: const Radius.circular(5),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: InputDecoration(
+                    isDense: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: Divider.createBorderSide(context, width: 3),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: Divider.createBorderSide(context, width: 3),
+                    ),
+                    floatingLabelStyle: Theme.of(context).textTheme.labelMedium,
+                    labelText: 'Delay (ms)',
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-        if (!isRunning)
-          ControlButton(
-            icon: Icons.play_arrow_rounded,
-            message: 'Run',
-            onTap: play,
-          ),
-        if (isRunning)
-          ControlButton(
-            icon: Icons.pause_rounded,
-            message: 'Pause',
-            onTap: pause,
-          ),
-        ControlButton(
-          icon: Icons.stop_rounded,
-          message: 'Reset',
-          onTap: stop,
+        Row(
+          children: <Widget>[
+            ControlButton(
+              icon: Icons.arrow_forward_ios_rounded,
+              message: 'Step',
+              onTap: () {
+                if (int.tryParse(stepC.text) == null) stepC.text = '1';
+                step(int.parse(stepC.text));
+              },
+            ),
+            if (!isRunning)
+              ControlButton(
+                icon: Icons.play_arrow_rounded,
+                message: 'Run',
+                onTap: play,
+              ),
+            if (isRunning)
+              ControlButton(
+                icon: Icons.pause_rounded,
+                message: 'Pause',
+                onTap: pause,
+              ),
+            ControlButton(
+              icon: Icons.stop_rounded,
+              message: 'Reset',
+              onTap: stop,
+            ),
+          ],
         ),
       ],
     );

@@ -2,14 +2,16 @@
 Online Brainfuck Debugger 
 
 ## Features
+- Stepper with different step sizes
+- Runner with different speeds
+- Tape visualizer with ASCII & byte view
+- Runtime Code & Input editing
+- \# Breakpoints
 
-### Layout
-- BF Logo in background
-- Variable stepsize
-- Different runner speeds
-- Add hover info
+## Planned Features
 
 ### Code features
+- Code highlighting
 - /* Code comments */
 
 ### Interpreter settings
