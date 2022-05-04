@@ -20,7 +20,7 @@ class Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Row(
       children: <Widget>[
         ControlButton(
           icon: Icons.arrow_forward_ios_rounded,
@@ -53,27 +53,30 @@ class ControlButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      hoverColor: Theme.of(context).primaryColorDark,
-      highlightColor: Theme.of(context).primaryColor,
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        height: 150,
-        width: 150,
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: InkWell(
+          onTap: onTap,
+          hoverColor: Theme.of(context).primaryColorDark,
+          highlightColor: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: Theme.of(context).dividerColor,
-            width: 3,
+          child: Container(
+            margin: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: Theme.of(context).dividerColor,
+                width: 3,
+              ),
+            ),
+            child: Icon(
+              icon,
+              size: 50,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
           ),
-        ),
-        child: Icon(
-          icon,
-          size: 50,
-          color: Theme.of(context).textTheme.bodyMedium!.color,
         ),
       ),
     );
