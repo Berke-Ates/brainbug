@@ -51,7 +51,8 @@ class EditorController extends TextEditingController {
     TextStyle? style,
     required bool withComposing,
   }) {
-    final String ps = text.padRight(mark + 1, text.isEmpty ? ' ' : '\$');
+    final String ps =
+        text.padRight(mark + 1, text.isEmpty && mark == 0 ? ' ' : '\$');
 
     return TextSpan(
       style: style,
