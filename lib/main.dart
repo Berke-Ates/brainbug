@@ -101,7 +101,7 @@ class _BrainBugState extends State<BrainBug> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        if (MediaQuery.of(context).size.shortestSide < 950)
+        if (MediaQuery.of(context).size.shortestSide < 600)
           Controls(
             interpreter,
             step: step,
@@ -112,9 +112,9 @@ class _BrainBugState extends State<BrainBug> {
             stepC: stepC,
             delayC: delayC,
           ),
-        if (MediaQuery.of(context).size.shortestSide < 950)
+        if (MediaQuery.of(context).size.shortestSide < 600)
           Editor(interpreter, controller: ec),
-        if (MediaQuery.of(context).size.shortestSide >= 950)
+        if (MediaQuery.of(context).size.shortestSide >= 600)
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
