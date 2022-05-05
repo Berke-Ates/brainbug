@@ -32540,10 +32540,10 @@ q.e.cx=s.e
 q.f.cx=s.r
 q.aK(new A.YL())},
 M(a,b){var s,r,q=this,p=null,o=t.p,n=A.b([],o),m=t.w
-if(b.a2(m).f.a.ghq()<950){s=q.z
+if(b.a2(m).f.a.ghq()<600){s=q.z
 s=s!=null&&s.b!=null
-n.push(A.a7l(q.d,q.x,s,q.gH1(q),q.gH6(q),q.gz3(q),q.r,q.gz5(q)))}if(b.a2(m).f.a.ghq()<950)n.push(new A.qU(q.d,q.e,p))
-if(b.a2(m).f.a.ghq()>=950){m=q.d
+n.push(A.a7l(q.d,q.x,s,q.gH1(q),q.gH6(q),q.gz3(q),q.r,q.gz5(q)))}if(b.a2(m).f.a.ghq()<600)n.push(new A.qU(q.d,q.e,p))
+if(b.a2(m).f.a.ghq()>=600){m=q.d
 s=A.fX(new A.qU(m,q.e,p),2)
 r=q.z
 r=r!=null&&r.b!=null
