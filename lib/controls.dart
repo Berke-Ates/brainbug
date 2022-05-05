@@ -28,7 +28,7 @@ class Controls extends StatelessWidget {
     return Column(
       children: <Widget>[
         Row(
-          children: [
+          children: <Widget>[
             Expanded(
               child: Container(
                 margin: const EdgeInsets.all(4),
@@ -72,8 +72,10 @@ class Controls extends StatelessWidget {
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   onChanged: (String s) {
-                    pause();
-                    play();
+                    if (isRunning) {
+                      pause();
+                      play();
+                    }
                   },
                   decoration: InputDecoration(
                     isDense: true,
