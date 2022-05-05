@@ -7,12 +7,13 @@ Online Brainfuck Debugger
 - Tape visualizer with ASCII & byte view
 - Runtime Code & Input editing
 - \# Breakpoints
+- Syntax Highlighting
 
 ## Planned Features
 
 ### Code features
-- Code highlighting
 - /* Code comments */
+- Line numbers
 
 ### Interpreter settings
 - Memsize

@@ -54,20 +54,68 @@ class EditorController extends TextEditingController {
     final String ps =
         text.padRight(mark + 1, text.isEmpty && mark == 0 ? ' ' : '\$');
 
+    final List<TextSpan> colored = ps.split('').map((String e) {
+      switch (e) {
+        case '>':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.blue[600]),
+          );
+        case '<':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.yellow[900]),
+          );
+        case '+':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.green[600]),
+          );
+        case '-':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.red[600]),
+          );
+        case '[':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.purpleAccent[700]),
+          );
+        case ']':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.purpleAccent[700]),
+          );
+        case '.':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.white70),
+          );
+        case ',':
+          return TextSpan(
+            text: e,
+            style: style!.copyWith(color: Colors.white70),
+          );
+      }
+
+      return TextSpan(
+        text: e,
+        style: style!.copyWith(color: Colors.white38),
+      );
+    }).toList();
+
+    if (mark >= 0) {
+      colored[mark] = TextSpan(
+        text: colored[mark].text,
+        style: style!.copyWith(
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+      );
+    }
+
     return TextSpan(
       style: style,
-      children: mark < 0
-          ? <TextSpan>[TextSpan(text: text)]
-          : <TextSpan>[
-              if (mark > 0) TextSpan(text: ps.substring(0, mark)),
-              TextSpan(
-                text: ps[mark],
-                style: style!.copyWith(
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                ),
-              ),
-              TextSpan(text: ps.substring(mark + 1)),
-            ],
+      children: colored,
     );
   }
 }

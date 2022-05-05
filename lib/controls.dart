@@ -71,6 +71,10 @@ class Controls extends StatelessWidget {
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
+                  onChanged: (String s) {
+                    pause();
+                    play();
+                  },
                   decoration: InputDecoration(
                     isDense: true,
                     focusedBorder: OutlineInputBorder(
