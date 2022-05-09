@@ -14,11 +14,13 @@ Online Brainfuck Debugger
 ### Code features
 - /* Code comments */
 - Line numbers
+- Code scrolling
 
 ### Interpreter settings
 - Memsize
 - Cellsize
 - Cell wrapping
+- Skip non instructions
 
 ### Editor
 - Memory edit
