@@ -68,7 +68,7 @@ class _BrainBugState extends State<BrainBug> {
 
   void step([int stepsize = 1]) {
     final bool isDone = interpreter.step(stepsize);
-    ec.mark = interpreter.cPtr;
+    ec.mark = interpreter.cPtr2Loc();
     ic.mark = interpreter.iPtr;
     if (isDone) pause();
     setState(() {});
@@ -90,7 +90,7 @@ class _BrainBugState extends State<BrainBug> {
   void stop() {
     pause();
     interpreter.reset();
-    ec.mark = interpreter.cPtr;
+    ec.mark = interpreter.cPtr2Loc();
     ic.mark = interpreter.iPtr;
     setState(() {});
   }

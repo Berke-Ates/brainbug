@@ -145,30 +145,33 @@ class ControlButton extends StatelessWidget {
     return Expanded(
       child: AspectRatio(
         aspectRatio: 1,
-        child: Tooltip(
-          message: message,
-          textStyle: Theme.of(context).textTheme.bodyMedium,
-          margin: const EdgeInsets.only(top: 25),
-          decoration: const BoxDecoration(color: Colors.transparent),
-          child: InkWell(
-            onTap: onTap,
-            hoverColor: Theme.of(context).primaryColorDark,
-            highlightColor: Theme.of(context).primaryColor,
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-              margin: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Theme.of(context).backgroundColor,
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(
-                  color: Theme.of(context).dividerColor,
-                  width: 3,
-                ),
+        child: InkWell(
+          onTap: onTap,
+          hoverColor: Theme.of(context).primaryColorDark,
+          highlightColor: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(5),
+          child: Container(
+            margin: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Theme.of(context).backgroundColor,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: Theme.of(context).dividerColor,
+                width: 3,
               ),
-              child: Icon(
-                icon,
-                size: 50,
-                color: Theme.of(context).textTheme.bodyMedium!.color,
+            ),
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    icon,
+                    size: 50,
+                    color: Theme.of(context).textTheme.bodyMedium!.color,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(message),
+                ],
               ),
             ),
           ),

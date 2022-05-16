@@ -12,6 +12,7 @@ class Editor extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(4),
       color: Theme.of(context).backgroundColor,
+      constraints: const BoxConstraints(maxHeight: 400),
       child: TextField(
         cursorColor: Theme.of(context).textTheme.bodyMedium!.color,
         cursorWidth: 4,
@@ -22,6 +23,7 @@ class Editor extends StatelessWidget {
         onChanged: (String? s) {
           if (s != null) {
             interpreter.code = controller.text;
+            controller.mark = interpreter.cPtr2Loc();
           }
         },
         decoration: InputDecoration(

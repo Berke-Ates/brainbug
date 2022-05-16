@@ -9,18 +9,16 @@ Online Brainfuck Debugger
 - \# Breakpoints
 - Syntax Highlighting
 
+## Implementation
+- 8-bit wrap around cells
+- Tape unlimited on the right
+- EOF leaves cell value unchanged
+
 ## Planned Features
 
 ### Code features
 - /* Code comments */
 - Line numbers
-- Code scrolling
-
-### Interpreter settings
-- Memsize
-- Cellsize
-- Cell wrapping
-- Skip non instructions
 
 ### Editor
 - Memory edit

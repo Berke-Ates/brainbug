@@ -1,4 +1,8 @@
 class Interpreter {
+  final int cellSize = 256;
+  // Tape wrap?
+  // Cell wrap?
+
   String code = '';
   String input = '';
   String output = '';
@@ -8,6 +12,18 @@ class Interpreter {
   int cPtr = 0; // Code Pointer
   int tPtr = 0; // Tape Pointer
   int iPtr = 0; // Input Pointer
+
+  final List<String> instructions = <String>[
+    '+',
+    '-',
+    '>',
+    '<',
+    '.',
+    ',',
+    '[',
+    ']',
+    '#',
+  ];
 
   /// Resets all pointers, the tape and output
   void reset() {
@@ -23,29 +39,31 @@ class Interpreter {
   /// Return if execution is done
   bool step([int size = 1]) {
     for (int i = 0; i < size; i++) {
-      if (cPtr >= code.length) return true;
+      if (cPtr2Loc() >= code.length) return true;
 
-      switch (code[cPtr]) {
+      switch (code[cPtr2Loc()]) {
         case '+':
-          tape[tPtr] = (tape[tPtr]! + 1) % 256;
+          tape[tPtr] = (tape[tPtr]! + 1) % cellSize;
           break;
         case '-':
-          tape[tPtr] = (tape[tPtr]! - 1) % 256;
+          tape[tPtr] = (tape[tPtr]! - 1) % cellSize;
           break;
         case '>':
           tPtr++;
           _alloc();
           break;
         case '<':
-          // TODO: Check bounds
           tPtr--;
+          if (tPtr < 0) {
+            tPtr = 0;
+            // Warning
+            return true;
+          }
           _alloc();
           break;
         case ',':
           if (iPtr < input.length) {
             tape[tPtr] = ascii2Byte(input[iPtr++]);
-          } else {
-            tape[tPtr] = 0;
           }
           break;
         case '.':
@@ -86,7 +104,6 @@ class Interpreter {
 
   /// Expands the [tape] if [tPtr] is pointing to a larger memory location
   void _alloc() {
-    // TODO: Wrap or warning
     for (int i = tape.length; i <= tPtr; i++) {
       tape[i] = 0;
     }
@@ -100,9 +117,26 @@ class Interpreter {
     return String.fromCharCode(byte);
   }
 
-  // TODO: Implement tape wrapping
+  /// Maps the code pointer to the location in the source code
+  int cPtr2Loc() {
+    int counter = 0;
+    for (int i = 0; i < code.length; i++) {
+      if (instructions.any((String instr) => code[i] == instr)) {
+        if (counter++ == cPtr) {
+          return i;
+        }
+      }
+    }
+
+    return code.length;
+  }
+
   /// Checks [tape] for valid values and wraps if necessary
-  void validateTape() {}
+  void validateTape() {
+    for (int i = 0; i < tape.length; i++) {
+      tape[i] = tape[i]! % cellSize;
+    }
+  }
 
   int? _findBracketMatch(int pos) {
     final List<int> stack = <int>[];
