@@ -16,11 +16,11 @@ Online Brainfuck Debugger
 
 ## Planned Features
 
-### Code features
+### Editor
 - /* Code comments */
 - Line numbers
 
-### Editor
+### Tape
 - Memory edit
 
 ### Nice to have
