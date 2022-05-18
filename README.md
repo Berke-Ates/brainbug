@@ -26,3 +26,6 @@ Online Brainfuck Debugger
 ### Nice to have
 - ASCII Table
 - Key binding
+
+## Bugs
+- \n issues
