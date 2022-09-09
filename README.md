@@ -28,4 +28,4 @@ Online Brainfuck Debugger
 - Key binding
 
 ## Bugs
-- \n issues
+- \n issues with `[...]`
