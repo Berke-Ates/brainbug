@@ -23,7 +23,7 @@ class Editor extends StatelessWidget {
         onChanged: (String? s) {
           if (s != null) {
             interpreter.code = controller.text;
-            controller.mark = interpreter.cPtr2Loc();
+            controller.mark = interpreter.cPtr2Loc(interpreter.cPtr);
           }
         },
         decoration: InputDecoration(
