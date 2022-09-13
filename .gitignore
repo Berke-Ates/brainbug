@@ -48,3 +48,6 @@ app.*.map.json
 ios
 android
 windows
+
+# build
+build/
