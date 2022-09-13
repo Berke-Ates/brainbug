@@ -39,9 +39,9 @@ class Interpreter {
   /// Return if execution is done
   bool step([int size = 1]) {
     for (int i = 0; i < size; i++) {
-      if (cPtr2Loc() >= code.length) return true;
+      if (cPtr2Loc(cPtr) >= code.length) return true;
 
-      switch (code[cPtr2Loc()]) {
+      switch (code[cPtr2Loc(cPtr)]) {
         case '+':
           tape[tPtr] = (tape[tPtr]! + 1) % cellSize;
           break;
@@ -71,7 +71,7 @@ class Interpreter {
           break;
         case '[':
           if (tape[tPtr] == 0) {
-            final int? val = _findBracketMatch(cPtr);
+            final int? val = findBracketMatch(cPtr);
             if (val != null) {
               cPtr = val;
             } else {
@@ -81,7 +81,7 @@ class Interpreter {
           break;
         case ']':
           if (tape[tPtr] != 0) {
-            final int? val = _findBracketMatch(cPtr);
+            final int? val = findBracketMatch(cPtr);
             if (val != null) {
               cPtr = val;
             } else {
@@ -117,14 +117,29 @@ class Interpreter {
     return String.fromCharCode(byte);
   }
 
-  /// Maps the code pointer to the location in the source code
-  int cPtr2Loc() {
+  /// Maps a code pointer to the location in the source code
+  int cPtr2Loc(int cPtr) {
     int counter = 0;
     for (int i = 0; i < code.length; i++) {
       if (instructions.any((String instr) => code[i] == instr)) {
         if (counter++ == cPtr) {
           return i;
         }
+      }
+    }
+
+    return code.length;
+  }
+
+  /// Maps a location in the source code to the code pointer
+  int loc2cPtr(int loc) {
+    int counter = 0;
+    for (int i = 0; i < code.length; i++) {
+      if (instructions.any((String instr) => code[i] == instr)) {
+        if (i == loc) {
+          return counter;
+        }
+        counter++;
       }
     }
 
@@ -138,11 +153,14 @@ class Interpreter {
     }
   }
 
-  int? _findBracketMatch(int pos) {
+  /// Finds the matching bracket given a code pointer.
+  /// Returns null if the match couldn't be found.
+  int? findBracketMatch(int pos) {
     final List<int> stack = <int>[];
+    final int loc = cPtr2Loc(pos);
 
-    if (code[pos] == '[') {
-      for (int i = pos; i < code.length; i++) {
+    if (code[loc] == '[') {
+      for (int i = loc; i < code.length; i++) {
         switch (code[i]) {
           case '[':
             stack.add(i);
@@ -153,15 +171,15 @@ class Interpreter {
             }
             stack.removeLast();
             if (stack.isEmpty) {
-              return i;
+              return loc2cPtr(i);
             }
         }
       }
       return null;
     }
 
-    if (code[pos] == ']') {
-      for (int i = pos; i >= 0; i--) {
+    if (code[loc] == ']') {
+      for (int i = loc; i >= 0; i--) {
         switch (code[i]) {
           case '[':
             if (stack.isEmpty) {
@@ -169,7 +187,7 @@ class Interpreter {
             }
             stack.removeLast();
             if (stack.isEmpty) {
-              return i;
+              return loc2cPtr(i);
             }
             break;
           case ']':
